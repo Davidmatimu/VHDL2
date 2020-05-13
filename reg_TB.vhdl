@@ -53,3 +53,31 @@ RS1_data: std_logic_vector(7 downto 0);
 RS2_data : std_logic_vector(7 downto 0);
 
 end record;
+
+begin
+--  Check each pattern.
+for n in patterns'range loop
+--  Set the inputs.
+RS1 <= patterns(n).reg1;
+RS2 <= patterns(n).reg2;
+WS <= patterns(n).dstReg;
+
+CLK <= patterns(n).clock;
+WE <= patterns(n).writeEn;
+Write_Data <= patterns(n).Write_Data;
+
+
+--  Wait for the results.
+wait for 1 ns;
+--  Check the outputs.
+assert RS1_data = patterns(n).RS1_data
+report "Register 1 is wrong" severity error;
+assert RS2_data = patterns(n).RS2_data
+report "Register 2 is wrong" severity error;
+
+end loop;
+assert false report "end of test" severity note;
+--  Wait forever; this will finish the simulation.
+wait;
+end process;
+end behav;
