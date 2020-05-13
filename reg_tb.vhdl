@@ -58,12 +58,12 @@ begin
 --  Check each pattern.
 for n in patterns'range loop
 --  Set the inputs.
-RS1 <= patterns(n).reg1;
-RS2 <= patterns(n).reg2;
-WS <= patterns(n).dstReg;
+RS1 <= patterns(n).RS1;
+RS2 <= patterns(n).RS2;
+WS <= patterns(n).WS;
 
-CLK <= patterns(n).clock;
-WE <= patterns(n).writeEn;
+CLK <= patterns(n).CLK;
+WE <= patterns(n).WE;
 Write_Data <= patterns(n).Write_Data;
 
 
