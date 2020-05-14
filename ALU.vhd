@@ -18,12 +18,13 @@ begin
 
 case OP is
 when "00" =>Result<= std_logic_vector(unsigned(A(31 downto 0)) + unsigned(B(31 downto 0))); --addition
- 
+	    Equal<='0';
 when "01" =>Result<= std_logic_vector(unsigned(A(31 downto 0)) - unsigned(B(31 downto 0))); --subtraction
+	    Equal<='0';
+when "10" =>Result<="00000000000000000000000000000000"; --Do nothing
+	    Equal<='0';
  
-when "10" => --Do nothing
- 
-when "11" => -- Set on Equal
+when "11" =>Result<="00000000000000000000000000000000"; -- Set on Equal
 	if A = B then
 		Equal <= '1';
 	else
