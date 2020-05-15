@@ -22,7 +22,7 @@ port (		RS1: 		in std_logic_vector(1 downto 0);
 end component;
 
 signal RS1,RS2,WS : std_logic_vector(1 downto 0);
-signal WE,clock : std_logic;
+signal WE,CLK : std_logic;
 signal Write_Data,RS1_data,RS2_data : std_logic_vector(7 downto 0);
 
 begin
