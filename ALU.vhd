@@ -3,10 +3,10 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ALU32 is
-    port (A : in std_logic_vector (31 downto 0);
-	  B : in std_logic_vector (31 downto 0);
+    port (A : in std_logic_vector (7 downto 0);
+	  B : in std_logic_vector (7 downto 0);
           OP: in std_logic_vector (1 downto 0);
-          Result: out std_logic_vector (31 downto 0);
+          Result: out std_logic_vector (7 downto 0);
 	  Equal: out std_logic);
              
 end ALU32;
@@ -17,14 +17,14 @@ process(A, B, OP)
 begin
 
 case OP is
-when "00" =>Result<= std_logic_vector(unsigned(A(31 downto 0)) + unsigned(B(31 downto 0))); --addition
+when "00" =>Result<= std_logic_vector(unsigned(A(7 downto 0)) + unsigned(B(7 downto 0))); --addition
 	    Equal<='0';
-when "01" =>Result<= std_logic_vector(unsigned(A(31 downto 0)) - unsigned(B(31 downto 0))); --subtraction
+when "01" =>Result<= std_logic_vector(unsigned(A(7 downto 0)) - unsigned(B(7 downto 0))); --subtraction
 	    Equal<='0';
-when "10" =>Result<="00000000000000000000000000000000"; --Do nothing
+when "10" =>Result<="00000000"; --Do nothing
 	    Equal<='0';
  
-when "11" =>Result<="00000000000000000000000000000000"; -- Set on Equal
+when "11" =>Result<="00000000"; -- Set on Equal
 	if A = B then
 		Equal <= '1';
 	else

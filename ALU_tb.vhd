@@ -7,54 +7,90 @@ end ALU32_tb;
 
 architecture behavioral of ALU32_tb is
     component ALU32 is
-    port (A : in std_logic_vector (31 downto 0);
-	  B : in std_logic_vector (31 downto 0);
-          OP: in std_logic_vector (1 downto 0);
-          Result: out std_logic_vector (31 downto 0);
-	  Equal: out std_logic
+    port (Atb : in std_logic_vector (7 downto 0);
+	  Btb : in std_logic_vector (7 downto 0);
+          OPtb: in std_logic_vector (1 downto 0);
+          Resulttb: out std_logic_vector (7 downto 0);
+	  Equaltb: out std_logic
 	 );
              
 end component;
 
+signal Atb, Btb, Restulttb : std_logic_vector(7 downto 0);
+signal Equaltb : std_logic;
+signal OPtb : std_logic_vector(1 downto 0);
+
 begin
 
-ALU32_tb0: ALU32 port map (A=>A,B=>B,OP=>OP,Result=>Result,Equal=>Equal);
+ALU32_tb0: ALU32 port map (Atb=>A,Btb=>B,OPtb=>OP,Resulttb=>Result,Equaltb=>Equal);
 
 process
-    A <= "01000000000011011000111010001001"; --1074630281 in decimal
-    B <= "00000000000010010000110100010001"; --593169 in decimal
-    OP <= "00";
-    assert Result = "01000000000101101001101110011010" report "addition incorrect" severity error; --1075226450 in decimal
-    assert Equal = "0" report "equal incorrect" severity error;
-    wait for 2 ns;
+    type pattern_type is record
+        A, B: std_logic_vector(7 downto 0);
+        OP : std_logic_vector(1 downto 0);
+        Result : std_logic_vector(7 downto 0);
+        Equal : std_logic;
+    end record;
 
-    A <= "01011010110100101101010010110111"; --1523766455 in decimal
-    B <= "00100100100100100100100100100100"; --613566756 in decimal
-    OP <= "01";
-    assert Result = "00110110010000001000101110010011" report "subtraction incorrect" severity error; --910199699 in decimal
-    assert Equal = "0" report "equal incorrect" severity error;
-    wait for 2 ns;
+    type pattern_array is array (natural range <>) of pattern_type;
+    constant patterns : pattern_array :=
+    (("10001001","00010001","00","10011010",'0'),
+    ("10110111","00100100","01","10010011",'0'),
+    ("01010101","10100101","10","00000000",'0'),
+    ("11111101","11111101","11","00000000",'1'),
+    ("10101101","01010101","11","00000000",'0'));
 
-    A <= "01110111011101000100010001010101";
-    B <= "10100101011010100101011010100101";
-    OP <= "10";
-    assert Result = "" report "do nothing incorrect" severity error;
-    assert Equal = "" report "equal incorrect" severity error;
-    wait for 2 ns;
+begin
+    for n in patterns'range loop
+        A <= patterns(n).A;
+        B <= patterns(n).B;
+        OP <= patterns(n).OP;
+        Result <= patterns(n).Result;
+        Equal <= patterns(n).Equal;
+        wait for 1 ns;
 
-    A <= "01001100011100001111000001111101";
-    A <= "01001100011100001111000001111101";
-    OP <= "11";
-    assert Result = "" report "check equal incorrect" severity error;
-    assert Equal = "1" report "equal incorrect" severity error;
-    wait for 2 ns;
+        assert Result = patterns(n).Result
+        report "bad Result value" severity error;
+        assert Equal = patterns(n).Equal
+        report "bad Equal value" severity error;
+        end loop;
+        assert false report "end of test" severity note;
 
-    A <= "01011010100101010010100110101101"
-    B <= "11111101110101000010101001010101"
-    OP <= "11";
-    assert Result = "" report "check equal incorrect" severity error;
-    assert Equal = "0" report "equal incorrect" severity error;
-    wait for 2 ns;
+--    wait for 1 ns;
+--    Atb <= "10001001"; --137 in decimal
+--    Btb <= "00010001"; --17 in decimal
+--    OPtb <= "00";
+--    assert Resulttb = "10011010" report "addition incorrect" severity error; --154 in decimal
+--    assert Equaltb = '0' report "equal incorrect" severity error;
+--    wait for 1 ns;
+
+--    Atb <= "10110111"; --183 in decimal
+--    Btb <= "00100100"; --36 in decimal
+--    OPtb <= "01";
+--    assert Resulttb = "10010011" report "subtraction incorrect" severity error; --147 in decimal
+--    assert Equaltb = '0' report "equal incorrect" severity error;
+--    wait for 1 ns;
+
+--    Atb <= "01010101"; --85 in decimal
+--    Btb <= "10100101"; --165 in decimal
+--    OPtb <= "10";
+--    assert Resulttb = "00000000" report "do nothing incorrect" severity error;
+--    assert Equaltb = '0' report "equal incorrect" severity error;
+--    wait for 1 ns;
+
+--    Atb <= "11111101"; --253 in decimal
+--    Btb <= "11111101"; --253 in decimal
+--    OPtb <= "11";
+--    assert Resulttb = "00000000" report "check equal incorrect" severity error;
+--    assert Equaltb = '1' report "equal incorrect" severity error;
+--    wait for 1 ns;
+
+--    Atb <= "10101101"; --173 in decimal
+--    Btb <= "01010101"; --85 in decimal
+--    OPtb <= "11";
+--    assert Resulttb = "00000000" report "check equal incorrect" severity error;
+--    assert Equaltb = '0' report "equal incorrect" severity error;
+--    wait for 1 ns;
 
 wait;
 end process;
