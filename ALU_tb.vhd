@@ -16,20 +16,20 @@ architecture behavioral of ALU32_tb is
              
 end component;
 
-signal Atb, Btb, Restulttb : std_logic_vector(7 downto 0);
-signal Equaltb : std_logic;
-signal OPtb : std_logic_vector(1 downto 0);
+signal a, b, result : std_logic_vector(7 downto 0);
+signal equal : std_logic;
+signal op : std_logic_vector(1 downto 0);
 
 begin
 
-ALU32_tb0: ALU32 port map (Atb=>A,Btb=>B,OPtb=>OP,Resulttb=>Result,Equaltb=>Equal);
+ALU32_tb0: ALU32 port map (Atb => a, Btb => b, OPtb => op, Resulttb => result, Equaltb => equal);
 
 process
     type pattern_type is record
-        A, B: std_logic_vector(7 downto 0);
-        OP : std_logic_vector(1 downto 0);
-        Result : std_logic_vector(7 downto 0);
-        Equal : std_logic;
+        a, b: std_logic_vector(7 downto 0);
+        op : std_logic_vector(1 downto 0);
+        result : std_logic_vector(7 downto 0);
+        equal : std_logic;
     end record;
 
     type pattern_array is array (natural range <>) of pattern_type;
@@ -42,11 +42,11 @@ process
 
 begin
     for n in patterns'range loop
-        A <= patterns(n).A;
-        B <= patterns(n).B;
-        OP <= patterns(n).OP;
-        Result <= patterns(n).Result;
-        Equal <= patterns(n).Equal;
+        a <= patterns(n).a;
+        b <= patterns(n).b;
+        op <= patterns(n).op;
+        result <= patterns(n).result;
+        equal <= patterns(n).equal;
         wait for 1 ns;
 
         assert Result = patterns(n).Result
