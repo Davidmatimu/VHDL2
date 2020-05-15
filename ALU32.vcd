@@ -1,0 +1,80 @@
+$date
+  Fri May 15 11:46:14 2020
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$scope module standard $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module numeric_std $end
+$upscope $end
+$scope module alu32_tb $end
+$var reg 8 ! a[7:0] $end
+$var reg 8 " b[7:0] $end
+$var reg 8 # result[7:0] $end
+$var reg 1 $ equal $end
+$var reg 2 % op[1:0] $end
+$scope module alu32_tb0 $end
+$var reg 8 & a[7:0] $end
+$var reg 8 ' b[7:0] $end
+$var reg 2 ( op[1:0] $end
+$var reg 8 ) result[7:0] $end
+$var reg 1 * equal $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+b10001001 !
+b00010001 "
+b10011010 #
+0$
+b00 %
+b10001001 &
+b00010001 '
+b00 (
+b10011010 )
+0*
+#1000000
+b10110111 !
+b00100100 "
+b10010011 #
+b01 %
+b10110111 &
+b00100100 '
+b01 (
+b10010011 )
+0*
+#2000000
+b01010101 !
+b10100101 "
+b00000000 #
+b10 %
+b01010101 &
+b10100101 '
+b10 (
+b00000000 )
+0*
+#3000000
+b11111101 !
+b11111101 "
+1$
+b11 %
+b11111101 &
+b11111101 '
+b11 (
+b00000000 )
+1*
+#4000000
+b10101101 !
+b01010101 "
+0$
+b10101101 &
+b01010101 '
+b00000000 )
+0*
+#5000000

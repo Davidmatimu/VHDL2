@@ -7,11 +7,11 @@ end ALU32_tb;
 
 architecture behavioral of ALU32_tb is
     component ALU32 is
-    port (Atb : in std_logic_vector (7 downto 0);
-	  Btb : in std_logic_vector (7 downto 0);
-          OPtb: in std_logic_vector (1 downto 0);
-          Resulttb: out std_logic_vector (7 downto 0);
-	  Equaltb: out std_logic
+    port (A : in std_logic_vector (7 downto 0);
+	  B : in std_logic_vector (7 downto 0);
+          OP: in std_logic_vector (1 downto 0);
+          Result: out std_logic_vector (7 downto 0);
+	  Equal: out std_logic
 	 );
              
 end component;
@@ -22,7 +22,7 @@ signal op : std_logic_vector(1 downto 0);
 
 begin
 
-ALU32_tb0: ALU32 port map (Atb => a, Btb => b, OPtb => op, Resulttb => result, Equaltb => equal);
+ALU32_tb0: ALU32 port map (A => a, B => b, OP => op, Result => result, Equal => equal);
 
 process
     type pattern_type is record
@@ -54,7 +54,7 @@ begin
         assert Equal = patterns(n).Equal
         report "bad Equal value" severity error;
         end loop;
-        assert false report "end of test" severity note;
+    assert false report "end of test" severity note;
 
 --    wait for 1 ns;
 --    Atb <= "10001001"; --137 in decimal
