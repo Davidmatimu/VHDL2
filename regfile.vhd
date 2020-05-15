@@ -1,5 +1,3 @@
-
-
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -10,7 +8,7 @@ entity regfile is
     Write_Data : in std_logic_vector(7 downto 0);
     CLK : in std_logic;
     WE : in std_logic;
-    RS1_data,RS2_data : out std_logic_vector(7 downto 0);
+    RS1_data,RS2_data : out std_logic_vector(7 downto 0)
   );
 end entity regfile;
 
@@ -19,7 +17,7 @@ architecture behavioral of regfile is
 
 signal Reg0,Reg1,Reg2,Reg3 : std_logic_vector(7 downto 0) := "00000000";
   
---The registers are addressed from b’00 to b’11
+--The registers are addressed from b00 to b11
   begin
     with RS1 select RS1_data <=
       Reg0 when "00",

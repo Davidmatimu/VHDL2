@@ -7,7 +7,7 @@ end reg_tb;
 
 architecture behav of reg_tb is
 --  Declaration of the component that will be instantiated.
-component regMem
+component regfile
 port (		RS1: 		in std_logic_vector(1 downto 0);
 		RS2:       	in std_logic_vector(1 downto 0);
 		WS:		in std_logic_vector(1 downto 0);
@@ -27,7 +27,7 @@ signal Write_Data,RS1_data,RS2_data : std_logic_vector(7 downto 0);
 
 begin
 --  Component instantiation.
-R1 : regMem
+R1 : regfile
 	port map(
 		RS1=>RS1,
 		RS2=>RS2,
@@ -57,6 +57,7 @@ end record;
 --RS1,RS2,WS,WE,clk,WD,RS1D,RS2D
 type pattern_array is array (natural range <>) of pattern_type;
 constant patterns : pattern_array :=
+
 (("00","00","00",'0','0',"00101101","00000000","00000000"), -- Clock not enabled so do nothing
 ("00","00","00",'0','1',"00101101","00000000","00000000"), -- Write not enabled so do nothing
 ("00","00","00",'1','0',"00101101","00000000","00000000"), -- Clock not enabled so do nothing
@@ -78,8 +79,9 @@ constant patterns : pattern_array :=
 ("10","01","00",'0','0',"11111111","",""), -- Clock not enabled so do nothing
 ("10","01","10",'0','1',"11111111","",""), -- Read RS1'10 and RS2'01
 ("11","00","00",'0','0',"11111111","",""), -- Clock not enabled so do nothing
-("11","00","11",'0','1',"11111111","",""), -- Read RS1'11 and RS2'00
+("11","00","11",'0','1',"11111111","","")  -- Read RS1'11 and RS2'00
 );
+
 begin
 --  Check each pattern.
 for n in patterns'range loop
