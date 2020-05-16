@@ -16,6 +16,7 @@ begin
 process(A, B, OP)
 begin
 
+-- Received the ok from professor to use VHDL built-in '+' and '-' operators for implementation
 case OP is
 when "00" =>Result<= std_logic_vector(unsigned(A(7 downto 0)) + unsigned(B(7 downto 0))); --addition
 	    Equal<='0';
